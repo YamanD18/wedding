@@ -1,0 +1,426 @@
+/* =========================================================
+   WEDDING INVITATION — style.css
+   Palette:
+   --maroon   : #7A1F2B  (aksen utama, bukan satu-satunya)
+   --maroon-d : #5A141D  (maroon lebih gelap)
+   --gold     : #C9A66B  (aksen emas)
+   --ivory    : #FAF3E8  (background netral)
+   --blush    : #FBEEE6  (background lembut kedua)
+   --ink      : #2B2018  (teks gelap)
+   ========================================================= */
+
+:root{
+  --maroon: #7A1F2B;
+  --maroon-d: #5A141D;
+  --gold: #C9A66B;
+  --ivory: #FAF3E8;
+  --blush: #FBEEE6;
+  --ink: #2B2018;
+  --ink-soft: #6b5b4f;
+
+  --font-script: 'Great Vibes', cursive;
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Jost', sans-serif;
+}
+
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; scroll-padding-top: env(safe-area-inset-top,0px); }
+body{
+  margin:0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--ivory);
+  overflow-x: hidden;
+  padding-top: env(safe-area-inset-top,0px);
+  padding-bottom: env(safe-area-inset-bottom,0px);
+}
+img{ max-width:100%; display:block; }
+button{ font-family: inherit; cursor:pointer; }
+
+/* ================= COVER ================= */
+.cover{
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: linear-gradient(180deg,var(--maroon) 0%, var(--maroon-d) 65%, #430e15 100%);
+  color: #fff;
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content:flex-end;
+  overflow:hidden;
+  text-align:center;
+}
+.cover-photo-wrap{
+  position:absolute;
+  top:0; left:0; right:0;
+  height:52%;
+  overflow:hidden;
+  -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+          mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+}
+.cover-photo{
+  width:100%; height:100%;
+  object-fit: cover;
+  object-position: center top;
+}
+.cover-content{
+  position:relative;
+  z-index:2;
+  padding: 2rem 1.5rem 3rem;
+  max-width: 480px;
+}
+.eyebrow-script{
+  font-family: var(--font-script);
+  font-size: 2.1rem;
+  color: var(--gold);
+  margin: 0 0 .2rem;
+  line-height:1;
+}
+.cover-names{
+  font-family: var(--font-display);
+  font-weight:500;
+  font-size: 1.7rem;
+  margin: 0 0 1rem;
+  letter-spacing:.5px;
+}
+.cover-to{
+  font-size:.85rem;
+  letter-spacing:.06em;
+  margin:0;
+  opacity:.85;
+}
+.cover-guest{
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.3rem;
+  margin: .35rem 0 1.6rem;
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 5px;
+}
+.btn-open{
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: #fff;
+  padding: .8rem 2.2rem;
+  border-radius: 999px;
+  font-size: .95rem;
+  letter-spacing:.05em;
+  transition: background .35s ease, color .35s ease, transform .2s ease;
+}
+.btn-open:hover{ background: var(--gold); color: var(--maroon-d); }
+.btn-open:active{ transform: scale(.97); }
+
+/* corner flowers */
+.corner-flower{
+  position:absolute;
+  width: 140px; height:140px;
+  z-index:1;
+  opacity:0;
+  transform: scale(.6);
+  animation: bloomIn 1.8s cubic-bezier(.2,.7,.3,1) .4s forwards;
+}
+.corner-flower.small{ width:100px; height:100px; }
+.corner-tl{ top:-10px; left:-10px; }
+.corner-br{ bottom:-10px; right:-10px; transform-origin: bottom right; }
+.corner-flower svg{ width:100%; height:100%; }
+@keyframes bloomIn{
+  0%{ opacity:0; transform: scale(.5) rotate(-8deg); }
+  100%{ opacity:1; transform: scale(1) rotate(0deg); }
+}
+.petal{ fill: var(--gold); opacity:.85; }
+.petal-core{ fill: #fff2d9; }
+.vine{ stroke: var(--gold); stroke-width:2; fill:none; opacity:.7; }
+.leaf ellipse{ fill:#8a9a55; opacity:.8; }
+
+/* ================= MUSIC BUTTON ================= */
+.music-btn{
+  position: fixed;
+  top: calc(1rem + env(safe-area-inset-top,0px));
+  right: 1rem;
+  z-index: 50;
+  width: 42px; height:42px;
+  border-radius:50%;
+  border: 1px solid rgba(255,255,255,.5);
+  background: rgba(0,0,0,.25);
+  color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  backdrop-filter: blur(4px);
+}
+
+/* ================= MAIN / PAGES ================= */
+.main-content{ display:none; }
+.main-content.show{ display:block; }
+
+.page{
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 4rem 1.6rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.page-ivory{ background: var(--ivory); }
+.page-blush{ background: var(--blush); }
+.page-maroon{ background: linear-gradient(160deg,var(--maroon) 0%, var(--maroon-d) 100%); color:#fff; }
+
+/* soft, non-rigid section separation */
+.page + .page{ box-shadow: 0 -1px 0 rgba(0,0,0,.03) inset; }
+
+/* reveal-on-scroll */
+.reveal{
+  opacity:0;
+  transform: translateY(18px);
+  transition: opacity .9s ease, transform .9s ease;
+}
+.reveal.in-view{ opacity:1; transform: translateY(0); }
+
+/* ---- hero page ---- */
+.hero-page{ gap:.4rem; }
+.circle-photo-wrap{ position:relative; width:200px; height:200px; margin: .5rem auto 1rem; }
+.circle-flower-ring{ position:absolute; inset:0; width:100%; height:100%; }
+.circle-photo{
+  position:absolute;
+  top:16px; left:16px; right:16px; bottom:16px;
+  border-radius:50%;
+  overflow:hidden;
+  background: var(--blush);
+  border: 2px solid var(--gold);
+}
+.circle-photo img{ width:100%; height:100%; object-fit:cover; }
+
+.names-script{
+  font-family: var(--font-script);
+  font-size: 2.6rem;
+  color: var(--maroon);
+  margin: .2rem 0 1rem;
+}
+.names-script.light{ color: var(--gold); }
+
+.hope-text{ max-width: 320px; line-height:1.7; color: var(--ink-soft); margin-bottom:1.4rem; }
+
+.countdown{ display:flex; gap:.7rem; margin-bottom:1.2rem; }
+.count-box{
+  background:#fff;
+  border: 1px solid var(--gold);
+  border-radius:10px;
+  width:64px; padding:.6rem 0;
+}
+.count-box span{ display:block; font-family:var(--font-display); font-size:1.4rem; color:var(--maroon); }
+.count-box small{ font-size:.6rem; letter-spacing:.05em; color:var(--ink-soft); }
+
+.wedding-date{ font-family: var(--font-display); font-size:1.05rem; margin: .2rem 0 1rem; }
+.save-date-badge{
+  border: 1px solid var(--maroon);
+  color: var(--maroon);
+  padding: .5rem 1.4rem;
+  border-radius:999px;
+  font-size:.85rem;
+  letter-spacing:.08em;
+}
+
+/* birds */
+.birds{ position:absolute; top:8%; left:0; width:100%; height:80px; pointer-events:none; opacity:.55; }
+.bird{ stroke: var(--maroon); stroke-width:2; fill:none; stroke-linecap:round; }
+.page-maroon .bird{ stroke: var(--gold); }
+.bird-a{ animation: flyAcross 9s linear 1 both; transform: translate(-40px, 10px) scale(1.2); }
+.bird-b{ animation: flyAcross 9s linear 1 .6s both; transform: translate(-40px, 30px) scale(.9); }
+.bird-c{ animation: flyAcross 9s linear 1 1.2s both; transform: translate(-40px, 50px) scale(1); }
+@keyframes flyAcross{
+  0%{ transform: translate(-40px, 10px) scale(1); }
+  100%{ transform: translate(860px, -10px) scale(1); }
+}
+@media (prefers-reduced-motion: reduce){
+  .bird-a,.bird-b,.bird-c,.corner-flower{ animation: none; opacity:1; transform:none; }
+}
+
+/* ---- salam / couple (page 2) ---- */
+.salam{ font-family: var(--font-display); font-size:1.3rem; color: var(--maroon); margin-bottom:1rem; }
+.salam.light{ color:#fff; }
+.intro-text{ max-width: 380px; line-height:1.8; color: var(--ink-soft); margin-bottom:2rem; }
+.page-blush .intro-text{ color:#5c4a3f; }
+
+.couple-block{ display:flex; align-items:center; gap:1.4rem; }
+.couple-side{ max-width:150px; }
+.couple-name{ font-family: var(--font-display); font-style: italic; color: var(--maroon); font-size:1.25rem; margin:0 0 .3rem; }
+.couple-order{ font-size:.8rem; color: var(--ink-soft); margin:0; }
+.couple-parents{ font-size:.9rem; margin:.15rem 0 0; }
+.ampersand{ font-family:var(--font-script); font-size:2rem; color: var(--gold); }
+
+/* ---- ayat & journey (page 3) ---- */
+.center-flower{ width:70px; height:70px; margin-bottom:1rem; }
+.center-flower svg{ width:100%; height:100%; }
+
+.ayat{
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  line-height:1.9;
+  max-width: 420px;
+  color: var(--ink);
+  margin: 0 0 2.4rem;
+}
+.ayat cite{ display:block; margin-top:.8rem; font-style:normal; font-size:.85rem; color: var(--maroon); }
+
+.section-title{ font-family: var(--font-display); font-size:1.4rem; margin: 0 0 1.6rem; color: var(--maroon); }
+.section-title.light{ color:#fff; }
+.section-subtitle{ font-family: var(--font-display); font-size:1.1rem; margin:.2rem 0 1.6rem; letter-spacing:.04em; }
+
+.framed-photo{ position:relative; width:220px; height:220px; margin-bottom:1.2rem; }
+.frame-flowers{ position:absolute; inset:-20px; width:calc(100% + 40px); height:calc(100% + 40px); pointer-events:none; }
+.framed-photo img{ width:100%; height:100%; object-fit:cover; border-radius:8px; background:var(--blush); }
+
+.timeline{ display:flex; flex-direction:column; gap:1.6rem; max-width:340px; margin-top:.6rem; }
+.timeline-item{ position:relative; padding-left:3.2rem; text-align:left; }
+.timeline-num{
+  position:absolute; left:0; top:0;
+  font-family: var(--font-display);
+  font-size:1.6rem; color: var(--gold);
+}
+.timeline-year{ display:block; font-size:.75rem; letter-spacing:.08em; color: var(--maroon); margin-bottom:.2rem; }
+.timeline-item h5{ margin:0 0 .3rem; font-family:var(--font-display); font-size:1rem; color: var(--ink); }
+.timeline-item p{ margin:0; font-size:.85rem; line-height:1.6; color: var(--ink-soft); }
+
+/* ---- akad & resepsi (page 4) ---- */
+.event-card{ margin-bottom:1rem; }
+.event-date{ font-family:var(--font-display); font-size:1.1rem; margin:.2rem 0; }
+.event-time{ margin:.2rem 0; opacity:.9; }
+.event-place{ margin:.6rem 0 0; font-weight:500; }
+.event-city{ margin:.1rem 0 0; opacity:.85; }
+.divider-flower{ color: var(--gold); font-size:1.2rem; margin: 1.4rem 0; }
+.btn-outline-light{
+  display:inline-block;
+  margin-top:1.6rem;
+  border:1px solid var(--gold);
+  color:#fff;
+  text-decoration:none;
+  padding:.7rem 2rem;
+  border-radius:999px;
+  font-size:.9rem;
+  transition: background .3s ease, color .3s ease;
+}
+.btn-outline-light:hover{ background: var(--gold); color: var(--maroon-d); }
+
+/* ---- galeri (page 5) ---- */
+.gallery-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .6rem;
+  max-width: 420px;
+  width:100%;
+}
+.gallery-grid img{
+  width:100%;
+  aspect-ratio: 3 / 4.4;
+  object-fit:cover;
+  border-radius:6px;
+  background: var(--blush);
+}
+/* pola: 1 kiri, 2 kanan berselang (item ganjil geser turun sedikit) */
+.gallery-grid img:nth-child(odd){ transform: translateY(14px); }
+.gallery-grid img:nth-child(even){ transform: translateY(-14px); }
+
+/* ---- dompet digital (page 6) ---- */
+.wallet-card{
+  background:#fff;
+  border: 1px solid var(--gold);
+  border-radius:14px;
+  padding: 1.6rem 2rem;
+  max-width:300px;
+  width:100%;
+}
+.wallet-bank{ font-size:.8rem; letter-spacing:.08em; color: var(--ink-soft); margin:0 0 .4rem; }
+.wallet-norek{ font-family: var(--font-display); font-size:1.3rem; color: var(--maroon); margin:0 0 .3rem; letter-spacing:.03em; }
+.wallet-name{ font-size:.9rem; margin:0 0 1rem; }
+.btn-copy{
+  border:1px solid var(--maroon);
+  background: transparent;
+  color: var(--maroon);
+  padding:.5rem 1.6rem;
+  border-radius:999px;
+  font-size:.85rem;
+  transition: background .3s ease, color .3s ease;
+}
+.btn-copy:hover{ background: var(--maroon); color:#fff; }
+.btn-copy.copied{ background: var(--maroon); color:#fff; }
+
+/* ---- RSVP (page 7) ---- */
+.rsvp-counts{ display:flex; gap:2.4rem; margin-bottom:1.6rem; }
+.count-item span{ display:block; font-family:var(--font-display); font-size:1.8rem; color: var(--maroon); }
+.count-item small{ font-size:.7rem; letter-spacing:.08em; color: var(--ink-soft); }
+
+.rsvp-form{
+  display:flex; flex-direction:column; gap:.5rem;
+  max-width: 340px; width:100%;
+  text-align:left;
+  margin-bottom: 2rem;
+}
+.rsvp-form label{ font-size:.8rem; color: var(--ink-soft); margin-top:.6rem; }
+.rsvp-form input[type=text], .rsvp-form textarea{
+  border: 1px solid #d9c9b8;
+  border-radius:8px;
+  padding:.6rem .8rem;
+  font-family: inherit;
+  font-size:.9rem;
+  background:#fff;
+  resize: vertical;
+}
+.radio-group{ display:flex; gap:.6rem; }
+.radio-pill{
+  border:1px solid var(--gold);
+  border-radius:999px;
+  padding:.4rem 1rem;
+  font-size:.85rem;
+  display:flex; align-items:center; gap:.35rem;
+}
+.btn-solid{
+  margin-top:1rem;
+  background: var(--maroon);
+  color:#fff;
+  border:none;
+  padding:.75rem 1.4rem;
+  border-radius:999px;
+  font-size:.95rem;
+  letter-spacing:.03em;
+  transition: background .3s ease, transform .2s ease;
+}
+.btn-solid:hover{ background: var(--maroon-d); }
+.btn-solid:disabled{ opacity:.6; }
+
+.wishes-list{
+  max-width: 340px; width:100%;
+  display:flex; flex-direction:column; gap:.8rem;
+  max-height: 260px;
+  overflow-y:auto;
+  padding-right:.3rem;
+}
+.wish-item{
+  text-align:left;
+  background:#fff;
+  border:1px solid #eadfce;
+  border-radius:10px;
+  padding:.7rem .9rem;
+}
+.wish-item .wish-name{ font-weight:600; font-size:.85rem; color: var(--maroon); margin:0 0 .2rem; }
+.wish-item .wish-status{ font-size:.7rem; color: var(--ink-soft); margin:0 0 .3rem; }
+.wish-item .wish-text{ font-size:.85rem; margin:0; line-height:1.5; }
+
+/* ---- closing (page 8) ---- */
+.closing-text{ max-width: 380px; line-height:1.8; margin-bottom:1.2rem; opacity:.95; }
+
+/* ================= responsive ================= */
+@media (min-width: 640px){
+  .cover-content, .page{ max-width: 480px; margin:0 auto; }
+  .page{ max-width:none; }
+}
+
+/* focus visibility */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
